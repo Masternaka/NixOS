@@ -153,6 +153,7 @@
   # Mémoire
   zramSwap.enable = true; # Activer le swap ZRAM
   zramSwap.algorithm = "zstd"; # zstd, lz4, lzo
+  zramSwap.priority = 100; # Priorité du swap ZRAM
 
   # Nettoyage automatique ssd fstrim
   services.fstrim.enable = true;
