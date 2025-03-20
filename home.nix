@@ -38,6 +38,204 @@
       fastfetch
   ];
 
+  {
+    programs.alacritty = {
+      enable = true;
+
+      # Configuration inline de Alacritty. Toutes ces options seront traduites en YAML
+      # et placées dans le fichier de configuration d’Alacritty.
+      settings = {
+        # Configuration de la fenêtre
+        window = {
+          decorations = "full";  # ["full", "none", ou "transparent"]
+          # Exemples pour le mode au démarrage : "Maximized", "Fullscreen", "Windowed"
+          startup_mode = "Windowed";
+        };
+
+        # Configuration de la police
+        font = {
+          normal = {
+            family = "Fira Code";
+            style = "Regular";
+          };
+          size = 12.0;
+        };
+
+        # Configuration des couleurs
+        colors = {
+          primary = {
+            background = "#222222";
+            foreground = "#F9F9F9";
+          };
+          #cursor = {
+           # text = "#1d1f21";
+           # cursor = "#c5c8c6";
+          };
+        };
+
+        # Historique du défilement
+        scrolling = {
+          history = 50000;
+        };
+      };
+        # Dimension de la fenêtre
+        window.dimensions = {
+          columns = 120;
+          lines = 30;
+
+      # Opacité de la fenêtre
+        window.opacity = {
+        opacity = 0.8;
+
+    };
+  }
+
+      {
+     programs.fastfetch = {
+        enable = true;
+        # Création du fichier de configuration Fastfetch dans ~/.config/fastfetch/config.jsonc
+          home.file.".config/fastfetch/config.jsonc" = {
+            text = ''
+              // Load with --load-config examples/7.jsonc
+              // Note that you must replace the image path to an existing image to display it.
+
+              {
+                "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+                "logo": {
+                  "padding": {
+                    "top": 2
+                  }
+                },
+                "display": {
+                  "separator": " -> "
+                },
+                "modules": [
+                  "title",
+                  "separator",
+                  {
+                    "type": "os",
+                    "key": " OS",
+                    "keyColor": "yellow",
+                    "format": "{2}"
+                  },
+                  {
+                    "type": "os",
+                    "key": "├{icon}",
+                    "keyColor": "yellow"
+                  },
+                  {
+                    "type": "kernel",
+                    "key": "├",
+                    "keyColor": "yellow"
+                  },
+                  {
+                    "type": "packages",
+                    "key": "├󰏖",
+                    "keyColor": "yellow"
+                  },
+                  {
+                    "type": "shell",
+                    "key": "└",
+                    "keyColor": "yellow"
+                  },
+                  "break",
+                  {
+                    "type": "wm",
+                    "key": " DE/WM",
+                    "keyColor": "blue"
+                  },
+                  {
+                    "type": "lm",
+                    "key": "├󰧨",
+                    "keyColor": "blue"
+                  },
+                  {
+                    "type": "wmtheme",
+                    "key": "├󰉼",
+                    "keyColor": "blue"
+                  },
+                  {
+                    "type": "icons",
+                    "key": "├󰀻",
+                    "keyColor": "blue"
+                  },
+                  {
+                    "type": "terminal",
+                    "key": "├",
+                    "keyColor": "blue"
+                  },
+                  {
+                    "type": "wallpaper",
+                    "key": "└󰸉",
+                    "keyColor": "blue"
+                  },
+                  "break",
+                  {
+                    "type": "host",
+                    "key": "󰌢 PC",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "cpu",
+                    "key": "├󰻠",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "gpu",
+                    "key": "├󰍛",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "disk",
+                    "key": "├",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "memory",
+                    "key": "├󰑭",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "swap",
+                    "key": "├󰓡",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "display",
+                    "key": "├󰍹",
+                    "keyColor": "green"
+                  },
+                  {
+                    "type": "uptime",
+                    "key": "└󰅐",
+                    "keyColor": "green"
+                  },
+                  "break",
+                  {
+                    "type": "sound",
+                    "key": " SOUND",
+                    "keyColor": "cyan"
+                  },
+                  {
+                    "type": "player",
+                    "key": "├󰥠",
+                    "keyColor": "cyan"
+                  },
+                  {
+                    "type": "media",
+                    "key": "└󰝚",
+                    "keyColor": "cyan"
+                  },
+                  "break",
+                  "colors"
+                ]
+              }
+            '';
+
+     };
+      }
+
+
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {

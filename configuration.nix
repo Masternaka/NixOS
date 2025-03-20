@@ -38,6 +38,15 @@
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.desktopManager.plasma6.enable = true;
+  #services.displayManager.gdm.enable = true;
+  #services.desktopManager.gnome.enable = true;
+  #services.displayManager.lightdm.enable = true;
+  #services.desktopManager.xfce.enable = true;
+  #services.desktopManager.cinnamon.enable = true;
+  #services.desktopManager.budgie.enable = true;
+  #services.desktopManager.mate.enable = true;
+  #services.windowManager.i3.enable = true;
+  #services.windowManager.qtile.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -77,12 +86,12 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-      neovim
-      btop
       vscodium
       sublime4
       brave
       vivaldi
+      meld
+
     ];
   };
 
@@ -93,9 +102,9 @@
 
 
   # Install firefox.
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
-  # Allow unfree packages
+  # Allow unfree packages in the system.
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -103,6 +112,12 @@
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
+      neovim
+      btop
+      firefox
+      #nerdfonts
+      fira-code-nerdfont
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -116,7 +131,8 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
+  services.openssh.openFirewall = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -132,4 +148,65 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
 
-}
+  # Configuration de services système
+
+  # Mémoire
+  zramSwap.enable = true; # Activer le swap ZRAM
+  zramSwap.algorithm = "zstd"; # zstd, lz4, lzo
+
+  # Nettoyage automatique ssd fstrim
+  services.fstrim.enable = true;
+  services.fstrim.interval = "weekly";
+
+  # Samba
+  services.samba = {
+      enable = true;
+      openFirewall = true;
+      nmbd.enable = true;
+    };
+
+  #boot.kernel.sysctl = { "vm.swappiness" = 5; } ; # Réduire la fréquence d'utilisation du swap
+
+  nix.settings.auto-optimise-store = true; # Optimiser le magasin Nix
+  nix.gc.automatic = true; # Activer la collecte des ordures automatique
+  nix.gc.dates = "weekly"; # Planifier la collecte des ordures
+  nix.gc.options = "--delete-older-than 15d"; # Supprimer les fichiers plus vieux que 15 jours
+
+
+  # Configuration de logiciels avancés
+  #programs.vim.package = pkgs.vim-full;
+  #programs.vim.defaultEditor = true;
+
+  # Exclure les logiciels de GNOME par défaut installés
+  #environment.gnome.excludePackages = with pkgs; [
+   # gnome-tour
+   # gnome.geary
+  ];
+
+
+  # Disques dur supplémentaires
+ fileSystems."/mnt/Disque500" =
+     { device = "/dev/disk/by-uuid/6299c676-272b-4ab1-ad01-b03131027645";
+       fsType = "ext4";
+	options = [ "noatime" "defaults" ];
+     };
+
+   fileSystems."/mnt/Backup500" =
+     { device = "/dev/disk/by-uuid/001781fc-9649-41a5-917d-2379e0b71b23";
+       fsType = "ext4";
+	options = [ "noatime" "defaults" ];
+     };
+
+   fileSystems."/mnt/Disque250" =
+     { device = "/dev/disk/by-uuid/9a35eb30-f354-48e1-b6fd-ba059ad625d3";
+       fsType = "ext4";
+	options = [ "noatime" "defaults" ];
+     };
+
+   fileSystems."/mnt/Backup250" =
+     { device = "/dev/disk/by-uuid/f45298af-e86d-452d-a0b7-467ba0c4539e";
+       fsType = "ext4";
+	options = [ "noatime" "defaults" ];
+     };
+
+ }
