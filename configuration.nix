@@ -182,7 +182,7 @@
   #environment.gnome.excludePackages = with pkgs; [
    # gnome-tour
    # gnome.geary
-  ];
+  #];
 
 
   # Disques dur supplémentaires
