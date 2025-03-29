@@ -36,7 +36,222 @@
     # '')
       alacritty
       fastfetch
+      kitty
+      kitty-themes
   ];
+
+  {
+    programs.alacritty = {
+      enable = true;
+
+      # Configuration inline de Alacritty. Toutes ces options seront traduites en YAML
+      # et placées dans le fichier de configuration d’Alacritty.
+      settings = {
+        # Configuration de la fenêtre
+        window = {
+          decorations = "full";  # ["full", "none", ou "transparent"]
+          # Exemples pour le mode au démarrage : "Maximized", "Fullscreen", "Windowed"
+          startup_mode = "Windowed";
+        };
+
+        # Configuration de la police
+        font = {
+          normal = {
+            family = "Fira Code";
+            style = "Regular";
+          };
+          size = 12.0;
+        };
+
+        # Configuration des couleurs
+        colors = {
+          primary = {
+            background = "#222222";
+            foreground = "#F9F9F9";
+          };
+          #cursor = {
+           # text = "#1d1f21";
+           # cursor = "#c5c8c6";
+          };
+        };
+
+        # Historique du défilement
+        scrolling = {
+          history = 50000;
+        };
+      };
+        # Dimension de la fenêtre
+        window.dimensions = {
+          columns = 120;
+          lines = 30;
+
+      # Opacité de la fenêtre
+        window.opacity = {
+        opacity = 0.8;
+
+    };
+  }
+
+  {
+    programs.fastfetch = {
+      enable = true;
+
+      settings = {
+        display = {
+          separator = " ➜ ";
+        };
+
+        logo = {
+          padding = {
+            top = 2;
+          };
+        };
+
+        modules = [
+          "break"
+          {
+            type = "os";
+            key = "OS";
+            keyColor = "31";
+          }
+          {
+            type = "kernel";
+            key = " ├  ";
+            keyColor = "31";
+          }
+          {
+            type = "packages";
+            key = " ├ 󰏖 ";
+            keyColor = "31";
+          }
+          {
+            type = "shell";
+            key = " └  ";
+            keyColor = "31";
+          }
+          "break"
+          {
+            type = "wm";
+            key = "WM   ";
+            keyColor = "32";
+          }
+          {
+            type = "wmtheme";
+            key = " ├ 󰉼 ";
+            keyColor = "32";
+          }
+          {
+            type = "icons";
+            key = " ├ 󰀻 ";
+            keyColor = "32";
+          }
+          {
+            type = "cursor";
+            key = " ├  ";
+            keyColor = "32";
+          }
+          {
+            type = "terminal";
+            key = " ├  ";
+            keyColor = "32";
+          }
+          {
+            type = "terminalfont";
+            key = " └  ";
+            keyColor = "32";
+          }
+          "break"
+          {
+            type = "host";
+            format = "{5} {1} Type {2}";
+            key = "PC   ";
+            keyColor = "33";
+          }
+          {
+            type = "cpu";
+            format = "{1} ({3}) @ {7} GHz";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "gpu";
+            format = "{1} {2} @ {12} GHz";
+            key = " ├ 󰢮 ";
+            keyColor = "33";
+          }
+          {
+            type = "memory";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "disk";
+            key = " ├ 󰋊 ";
+            keyColor = "33";
+          }
+          {
+            type = "swap";
+            key = " ├ 󰋊 ";
+            keyColor = "33";}
+          }
+          {
+            type = "monitor";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "player";
+            key = " ├ 󰥠 ";
+            keyColor = "33";
+          }
+          {
+            type = "media";
+            key = " └ 󰝚 ";
+            keyColor = "33";
+          }
+          "break"
+          {
+            type = "uptime";
+            key = "   Uptime   ";
+          }
+        ];
+      };
+    };
+  };
+
+  {
+    programs.kitty = {
+      enable = true;
+
+      settings = {
+        # Configuration de la police
+        font = {
+          family = "Fira Code";
+          size = 12.0;
+        };
+
+        # Configuration des couleurs
+        colors = {
+          background = "#222222";
+          foreground = "#F9F9F9";
+        };
+
+        # Historique du défilement
+        scrolling = {
+          history = 50000;
+        };
+
+        # Opacité de la fenêtre
+        background_opacity = 0.8;
+
+        # Thème de couleurs
+        theme = "Gruvbox Dark";
+
+        };
+      };
+    };
+
+
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -51,42 +266,6 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
-    };
-
-  programs.alacritty = {
-    enable = true;
-
-    settings = {
-      window = {
-        decorations = "full";
-        startup_mode = "Windowed";
-        dimensions = {
-          columns = 120;
-          lines = 40;
-        };
-        opacity = 0.8;
-        };
-
-      font = {
-        normal = {
-          family = "FiraCode Nerd Font";
-          style = "Regular";
-        };
-        size = 12.0;
-      };
-
-      colors = {
-        primary = {
-          background = "#222222";
-          foreground = "#F9F9F9";
-        };
-      };
-
-      scrolling = {
-        history = 50000;
-
-      };
-    };
   };
 
   # Home Manager can also manage your environment variables through

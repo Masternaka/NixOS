@@ -1,2 +1,2 @@
 # NixOS
-La configuration dans la branche main est celle qui fonctionne et à été testé.
+La configuration qui est dans le répertoire NixOS-Testing est celle qui sera à tester.

@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
@@ -110,14 +106,17 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      wget
-      vscodium
-      zed-editor
-      neovim
-      btop
-      firefox
-      #nerdfonts
-      fira-code-nerdfont
+  flatpak
+  wget
+  vscodium
+  zed-editor
+  neovim
+  btop
+  firefox
+  #nerdfonts
+  fira-code-nerdfont
+  #fira-code
+  #fira-code-symbols
 
   ];
 
@@ -130,6 +129,27 @@
   # };
 
   # List services that you want to enable:
+    services.avahi.enable = true;
+    #gvfs.enable = true;
+    #blueman.enable = true;
+    #gnome.gnome-keyring.enable = true;
+
+
+  # Ajout du support pour les flatpak
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+      config.common.default = "kde"
+    };
+    services.flatpak.enable = true;
+    systemd.services.flatpak-repo = {
+      wantedBy = [ "multi-user.target" ];
+      path = [ pkgs.flatpak ];
+      script = ''
+        flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      '';
+    };
+
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -165,6 +185,51 @@
       enable = true;
       openFirewall = true;
       nmbd.enable = true;
+      workgroup = "WORKGROUP";
+      serverString = "Serveur Samba NixOS";
+
+      shares = {
+        public = {
+          comment = "Partage public";
+          path = "/mnt/Disque500";
+          browseable = true;
+          guestOk = false;
+          readOnly = false;
+          validUsers = [ "gabriel" ];
+          createMask = "0640";
+          directoryMask = "0750";
+      };
+        backup = {
+          comment = "Sauvegarde";
+          path = "/mnt/Backup500";
+          browseable = true;
+          guestOk = false;
+          readOnly = false;
+          validUsers = [ "gabriel" ];
+          createMask = "0640";
+          directoryMask = "0750";
+      };
+        public250 = {
+          comment = "Partage public 250";
+          path = "/mnt/Disque250";
+          browseable = true;
+          guestOk = false;
+          readOnly = false;
+          validUsers = [ "gabriel" ];
+          createMask = "0640";
+          directoryMask = "0750";
+      };
+        backup250 = {
+          comment = "Sauvegarde 250";
+          path = "/mnt/Backup250";
+          browseable = true;
+          guestOk = false;
+          readOnly = false;
+          validUsers = [ "gabriel" ];
+          createMask = "0640";
+          directoryMask = "0750";
+            };
+        };
     };
 
   #boot.kernel.sysctl = { "vm.swappiness" = 5; } ; # Réduire la fréquence d'utilisation du swap
@@ -187,28 +252,29 @@
 
 
   # Disques dur supplémentaires
+  # Ne pas oublier de faire sudo "chown -R gabriel:gabriel /mnt/Disque500" pour donner les droits à mon utilisateur, faire la même chose pour les autres disques
  fileSystems."/mnt/Disque500" =
      { device = "/dev/disk/by-uuid/6a9ad27c-8250-437a-a680-e8041635c22e";
        fsType = "ext4";
-	options = [ "noatime" "defaults" ];
+	options = [ "defaults" "noatime" "nofail" ];
      };
 
    fileSystems."/mnt/Backup500" =
      { device = "/dev/disk/by-uuid/5fc2f44a-a116-4d8d-a0ab-7873ea3b8c02";
        fsType = "ext4";
-	options = [ "noatime" "defaults" ];
+	options = [ "defaults" "noatime" "nofail" ];
      };
 
    fileSystems."/mnt/Disque250" =
      { device = "/dev/disk/by-uuid/dffc4e34-df94-49e3-89dd-0a38729d3f35";
        fsType = "ext4";
-	options = [ "noatime" "defaults" ];
+	options = [ "defaults" "noatime" "nofail" ];
      };
 
    fileSystems."/mnt/Backup250" =
      { device = "/dev/disk/by-uuid/09b54f39-a100-4bcd-b018-7144535a9fb2";
        fsType = "ext4";
-	options = [ "noatime" "defaults" ];
+	options = [ "defaults" "noatime" "nofail" ];
      };
 
  }
