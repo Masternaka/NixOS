@@ -36,6 +36,8 @@
     # '')
       alacritty
       fastfetch
+      kitty
+      kitty-themes
   ];
 
   {
@@ -90,150 +92,165 @@
     };
   }
 
-      {
-     programs.fastfetch = {
-        enable = true;
-        # Création du fichier de configuration Fastfetch dans ~/.config/fastfetch/config.jsonc
-          home.file.".config/fastfetch/config.jsonc" = {
-            text = ''
-              // Load with --load-config examples/7.jsonc
-              // Note that you must replace the image path to an existing image to display it.
+  {
+    programs.fastfetch = {
+      enable = true;
 
-              {
-                "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
-                "logo": {
-                  "padding": {
-                    "top": 2
-                  }
-                },
-                "display": {
-                  "separator": " -> "
-                },
-                "modules": [
-                  "title",
-                  "separator",
-                  {
-                    "type": "os",
-                    "key": " OS",
-                    "keyColor": "yellow",
-                    "format": "{2}"
-                  },
-                  {
-                    "type": "os",
-                    "key": "├{icon}",
-                    "keyColor": "yellow"
-                  },
-                  {
-                    "type": "kernel",
-                    "key": "├",
-                    "keyColor": "yellow"
-                  },
-                  {
-                    "type": "packages",
-                    "key": "├󰏖",
-                    "keyColor": "yellow"
-                  },
-                  {
-                    "type": "shell",
-                    "key": "└",
-                    "keyColor": "yellow"
-                  },
-                  "break",
-                  {
-                    "type": "wm",
-                    "key": " DE/WM",
-                    "keyColor": "blue"
-                  },
-                  {
-                    "type": "lm",
-                    "key": "├󰧨",
-                    "keyColor": "blue"
-                  },
-                  {
-                    "type": "wmtheme",
-                    "key": "├󰉼",
-                    "keyColor": "blue"
-                  },
-                  {
-                    "type": "icons",
-                    "key": "├󰀻",
-                    "keyColor": "blue"
-                  },
-                  {
-                    "type": "terminal",
-                    "key": "├",
-                    "keyColor": "blue"
-                  },
-                  {
-                    "type": "wallpaper",
-                    "key": "└󰸉",
-                    "keyColor": "blue"
-                  },
-                  "break",
-                  {
-                    "type": "host",
-                    "key": "󰌢 PC",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "cpu",
-                    "key": "├󰻠",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "gpu",
-                    "key": "├󰍛",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "disk",
-                    "key": "├",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "memory",
-                    "key": "├󰑭",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "swap",
-                    "key": "├󰓡",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "display",
-                    "key": "├󰍹",
-                    "keyColor": "green"
-                  },
-                  {
-                    "type": "uptime",
-                    "key": "└󰅐",
-                    "keyColor": "green"
-                  },
-                  "break",
-                  {
-                    "type": "sound",
-                    "key": " SOUND",
-                    "keyColor": "cyan"
-                  },
-                  {
-                    "type": "player",
-                    "key": "├󰥠",
-                    "keyColor": "cyan"
-                  },
-                  {
-                    "type": "media",
-                    "key": "└󰝚",
-                    "keyColor": "cyan"
-                  },
-                  "break",
-                  "colors"
-                ]
-              }
-            '';
+      settings = {
+        display = {
+          separator = " ➜ ";
+        };
 
-     };
-      }
+        logo = {
+          padding = {
+            top = 2;
+          };
+        };
+
+        modules = [
+          "break"
+          {
+            type = "os";
+            key = "OS";
+            keyColor = "31";
+          }
+          {
+            type = "kernel";
+            key = " ├  ";
+            keyColor = "31";
+          }
+          {
+            type = "packages";
+            key = " ├ 󰏖 ";
+            keyColor = "31";
+          }
+          {
+            type = "shell";
+            key = " └  ";
+            keyColor = "31";
+          }
+          "break"
+          {
+            type = "wm";
+            key = "WM   ";
+            keyColor = "32";
+          }
+          {
+            type = "wmtheme";
+            key = " ├ 󰉼 ";
+            keyColor = "32";
+          }
+          {
+            type = "icons";
+            key = " ├ 󰀻 ";
+            keyColor = "32";
+          }
+          {
+            type = "cursor";
+            key = " ├  ";
+            keyColor = "32";
+          }
+          {
+            type = "terminal";
+            key = " ├  ";
+            keyColor = "32";
+          }
+          {
+            type = "terminalfont";
+            key = " └  ";
+            keyColor = "32";
+          }
+          "break"
+          {
+            type = "host";
+            format = "{5} {1} Type {2}";
+            key = "PC   ";
+            keyColor = "33";
+          }
+          {
+            type = "cpu";
+            format = "{1} ({3}) @ {7} GHz";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "gpu";
+            format = "{1} {2} @ {12} GHz";
+            key = " ├ 󰢮 ";
+            keyColor = "33";
+          }
+          {
+            type = "memory";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "disk";
+            key = " ├ 󰋊 ";
+            keyColor = "33";
+          }
+          {
+            type = "swap";
+            key = " ├ 󰋊 ";
+            keyColor = "33";}
+          }
+          {
+            type = "monitor";
+            key = " ├  ";
+            keyColor = "33";
+          }
+          {
+            type = "player";
+            key = " ├ 󰥠 ";
+            keyColor = "33";
+          }
+          {
+            type = "media";
+            key = " └ 󰝚 ";
+            keyColor = "33";
+          }
+          "break"
+          {
+            type = "uptime";
+            key = "   Uptime   ";
+          }
+        ];
+      };
+    };
+  };
+
+  {
+    programs.kitty = {
+      enable = true;
+
+      settings = {
+        # Configuration de la police
+        font = {
+          family = "Fira Code";
+          size = 12.0;
+        };
+
+        # Configuration des couleurs
+        colors = {
+          background = "#222222";
+          foreground = "#F9F9F9";
+        };
+
+        # Historique du défilement
+        scrolling = {
+          history = 50000;
+        };
+
+        # Opacité de la fenêtre
+        background_opacity = 0.8;
+
+        # Thème de couleurs
+        theme = "Gruvbox Dark";
+
+        };
+      };
+    };
+
 
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
