@@ -82,7 +82,6 @@
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
       kdePackages.kate
-      #sublime4
       brave
       vivaldi
       meld
